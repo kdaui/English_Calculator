@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GODHELPME INDUSTRIES(C) - ENGLISH CALCULATOR 2.5</title>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #0A0F1C;
+            --secondary-dark: #141928;
+            --tertiary-dark: #1C2333;
+            --primary-blue: #1B3A5F;
+            --secondary-blue: #2C4E7C;
+            --accent-blue: #3D6299;
+            --light-accent: #5E8ABF;
+            --text-primary: #B8C5D6;
+            --text-secondary: #8A9BB3;
+            --accent-red: #8B2635;
+            --border-color: #2A3F5F;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Share Tech Mono', monospace;
+            background-color: var(--primary-dark);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .technical-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 200%;
+            z-index: -1;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%);
+        }
+
+        .parallax-layer { position: fixed; width: 110%; height: 110%; top: -5%; left: -5%; z-index: -1;}
+        .circuit-pattern {
+            position: absolute; width: 100%; height: 100%;
+            background-image: linear-gradient(var(--border-color) 1px, transparent 1px), linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
+            background-size: 50px 50px; opacity: 0.1;
+        }
+        .grid-overlay {
+            position: absolute; width: 100%; height: 100%;
+            background: linear-gradient(rgba(94, 138, 191, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(94, 138, 191, 0.1) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+        .scanning-lines {
+            position: absolute; width: 100%; height: 100%;
+            background: linear-gradient(0deg, transparent 50%, rgba(94, 138, 191, 0.03) 50%);
+            background-size: 100% 4px; animation: scan 8s linear infinite;
+        }
+        @keyframes scan { 0% { background-position: 0 0; } 100% { background-position: 0 100px; } }
+
+        .content-wrapper {
+            position: relative; z-index: 1; max-width: 800px; margin: 0 auto;
+            padding: 60px 20px; min-height: 100vh; display: flex; flex-direction: column;
+        }
+
+        .main-header { text-align: center; margin-bottom: 40px; }
+        .main-title {
+            font-size: 2.5rem; color: var(--light-accent); letter-spacing: 4px;
+            text-transform: uppercase; margin-bottom: 15px; position: relative; display: inline-block;
+        }
+
+        .projects-list { display: flex; flex-direction: column; gap: 20px; margin-bottom: 40px; }
+        
+        .list-item {
+            display: flex; align-items: center; gap: 20px; padding: 20px;
+            background: rgba(28, 35, 51, 0.8); border: 1px solid var(--border-color);
+            border-radius: 8px; position: relative; overflow: hidden;
+        }
+
+        .item-number { font-size: 2rem; font-weight: bold; color: rgba(94, 138, 191, 0.3); min-width: 50px; }
+        .title-text { font-size: 1.2rem; color: var(--light-accent); text-transform: uppercase; }
+
+        input[type="number"], select {
+            background: var(--primary-dark);
+            border: 1px solid var(--accent-blue);
+            color: var(--light-accent);
+            padding: 8px;
+            font-family: 'Share Tech Mono', monospace;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        .action-btn {
+            display: inline-block; padding: 10px 25px; background: transparent;
+            border: 1px solid var(--accent-blue); border-radius: 4px;
+            color: var(--light-accent); text-decoration: none; font-size: 1rem;
+            letter-spacing: 2px; cursor: pointer; transition: all 0.3s ease;
+            text-transform: uppercase; margin-top: 10px;
+        }
+        .action-btn:hover { background: rgba(61, 98, 153, 0.3); transform: translateY(-2px); box-shadow: 0 5px 10px rgba(94, 138, 191, 0.2); }
+
+        .hidden { display: none; }
+        #final-result {
+            font-size: 1.8rem; color: var(--text-primary); text-align: center;
+            padding: 30px; border: 1px dashed var(--light-accent); margin-top: 20px;
+            background: rgba(27, 58, 95, 0.2);
+        }
+
+        .footer-text { color: var(--text-secondary); font-style: italic; font-size: 0.8rem; text-align: center; margin-top: 20px;}
+    </style>
+</head>
+<body>
+
+    <div class="technical-bg"></div>
+    <div class="parallax-layer">
+        <div class="circuit-pattern"></div>
+        <div class="grid-overlay"></div>
+        <div class="scanning-lines"></div>
+    </div>
+
+    <div class="content-wrapper">
+        <header class="main-header">
+            <h1 class="main-title">ENGLISH CALCULATOR 2.5</h1>
+            <p class="main-subtitle">GODHELPME INDUSTRIES(C) </p>
+        </header>
+
+        <div id="step1" class="projects-list">
+            <div class="list-item featured">
+                <div class="item-number">01</div>
+                <div class="item-content">
+                    <div class="title-text">Initialization</div>
+                    <p class="item-desc">How many words are required for this calculation?</p>
+                    <input type="number" id="wordCount" value="3" min="1" max="20">
+                    <button class="action-btn" onclick="goToStep2()">Proceed</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="step2" class="projects-list hidden">
+            <div id="word-selectors-container"></div>
+            <div style="text-align: center;">
+                <button class="action-btn" onclick="calculate()">CALCULATE</button>
+                <button class="action-btn" style="border-color: var(--accent-red); color: var(--accent-red);" onclick="location.reload()">Abort</button>
+            </div>
+        </div>
+
+        <div id="step3" class="hidden">
+            <div class="list-item warning">
+                <div class="item-content">
+                    <div class="title-text">Output Generated</div>
+                    <div id="final-result"></div>
+                    <div style="text-align: center; margin-top: 20px;">
+                        <button class="action-btn" onclick="location.reload()">Clear Cache & Restart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="main-footer">
+            <div class="footer-line"></div>
+            <p class="footer-text">GODHELPME INDUSTRIES SYSTEM v2.5 - <a href="https://chloechrome.github.io" style="color: var(--light-accent); text-decoration: none;">AQUA</a> AND BOOK</p>
+        </footer>
+    </div>
+
+    <script>
+        const db = {
+            nouns: ["dog", "cat", "person", "horse", "apple", "orange"],
+            verbs: ["ran", "walked"],
+            adnouns: ["big", "small"],
+            adverbs: ["quickly", "slowly"]
+        };
+
+        function getRandom(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+
+        function choicesfunc(xyz) {
+            xyz = xyz.toLowerCase().trim();
+            if (xyz === "noun" || xyz === "n") return getRandom(db.nouns);
+            if (xyz === "verb" || xyz === "v") return getRandom(db.verbs);
+            if (xyz === "adjective" || xyz === "an") return getRandom(db.adnouns);
+            if (xyz === "adverb" || xyz === "av") return getRandom(db.adverbs);
+            if (xyz === "a") return "a";
+            if (xyz === "t") return "the";
+            if (xyz === "et") return "and";
+            if (xyz === "o") return "or";
+            if (xyz === "th") return "then";
+            return "";
+        }
+
+        function goToStep2() {
+            const count = document.getElementById('wordCount').value;
+            const container = document.getElementById('word-selectors-container');
+            container.innerHTML = '';
+
+            for (let i = 0; i < count; i++) {
+                container.innerHTML += `
+                    <div class="list-item">
+                        <div class="item-number">${String(i + 1).padStart(2, '0')}</div>
+                        <div class="item-content">
+                            <div class="title-text">Word Segment ${i + 1}</div>
+                            <select class="word-type-select">
+                                <option value="n">Noun (n)</option>
+                                <option value="v">Verb (v)</option>
+                                <option value="an">Adjective (an)</option>
+                                <option value="av">Adverb (av)</option>
+                                <option value="a">"a"</option>
+                                <option value="t">"the"</option>
+                                <option value="et">"and"</option>
+                                <option value="o">"or"</option>
+                                <option value="th">"then"</option>
+                            </select>
+                        </div>
+                    </div>
+                `;
+            }
+
+            document.getElementById('step1').classList.add('hidden');
+            document.getElementById('step2').classList.remove('hidden');
+        }
+
+        function calculate() {
+            const selects = document.querySelectorAll('.word-type-select');
+            let output = [];
+
+            selects.forEach(select => {
+                output.push(choicesfunc(select.value));
+            });
+
+            const finalSentence = output.join(" ") + ".";
+            document.getElementById('final-result').innerText = finalSentence;
+
+            document.getElementById('step2').classList.add('hidden');
+            document.getElementById('step3').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
